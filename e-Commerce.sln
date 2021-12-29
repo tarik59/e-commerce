@@ -5,13 +5,16 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F431628B-FFBF-4EF5-A56D-38810E3CD0C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EC_Domain", "EC_Domain\EC_Domain.csproj", "{0A5439C4-46BE-42B3-B9D6-F307CE7918BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EC_Domain", "EC_Domain\EC_Domain.csproj", "{0A5439C4-46BE-42B3-B9D6-F307CE7918BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EC_Repository", "EC_Repository\EC_Repository.csproj", "{2A440131-313A-4EBB-83C7-8B1268BDEC42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EC_Repository", "EC_Repository\EC_Repository.csproj", "{2A440131-313A-4EBB-83C7-8B1268BDEC42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EC_Services", "EC_Services\EC_Services.csproj", "{4494F35D-09AB-413C-990D-D4EF369F455E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EC_Services", "EC_Services\EC_Services.csproj", "{4494F35D-09AB-413C-990D-D4EF369F455E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EC_Web", "EC_Web\EC_Web.csproj", "{848E8A9E-B906-4CFD-BB3E-2904E122DF99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EC_Web", "EC_Web\EC_Web.csproj", "{848E8A9E-B906-4CFD-BB3E-2904E122DF99}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4494F35D-09AB-413C-990D-D4EF369F455E} = {4494F35D-09AB-413C-990D-D4EF369F455E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

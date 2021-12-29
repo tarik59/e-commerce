@@ -1,7 +1,10 @@
+using EC_Repository;
+using EC_Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +14,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EC_Domain.Identity;
+using EC_Repository.Helpers;
 
 namespace EC_Web
 {
@@ -18,7 +23,7 @@ namespace EC_Web
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration; 
         }
 
         public IConfiguration Configuration { get; }
@@ -26,6 +31,12 @@ namespace EC_Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddIdentityCore<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
+               .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -37,6 +48,7 @@ namespace EC_Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //DbFactory.SetProperties(Configuration);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
