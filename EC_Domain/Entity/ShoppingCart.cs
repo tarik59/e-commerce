@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace EC_Domain.Entity
 {
-    public class ShoppingCart
+    public class ShoppingCart : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public int AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         public ICollection<Product> products { get; set; }

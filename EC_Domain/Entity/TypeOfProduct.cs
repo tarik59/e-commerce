@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EC_Domain.Entity
 {
-    public class TypeOfProduct
+    public class TypeOfProduct : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

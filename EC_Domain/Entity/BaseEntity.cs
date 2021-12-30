@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EC_Domain.Entity
 {
-    public class Gender : BaseEntity
+    public class BaseEntity
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
