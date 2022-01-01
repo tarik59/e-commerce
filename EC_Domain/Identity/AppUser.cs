@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EC_Domain.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -15,5 +16,6 @@ namespace EC_Domain.Identity
         public string Address { get; set; }
         [DataType(DataType.Date)]  
         public DateTime BirthDate { get; set; }
+        public ICollection<Order> orders { get; set; }
     }
 }

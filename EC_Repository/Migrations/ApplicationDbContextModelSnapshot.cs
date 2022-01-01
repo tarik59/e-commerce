@@ -44,6 +44,36 @@ namespace EC_Repository.Migrations
                     b.ToTable("Genders");
                 });
 
+            modelBuilder.Entity("EC_Domain.Entity.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("statusId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("statusId");
+
+                    b.ToTable("Order");
+                });
+
             modelBuilder.Entity("EC_Domain.Entity.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -88,6 +118,21 @@ namespace EC_Repository.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("EC_Domain.Entity.ProductInOrder", b =>
+                {
+                    b.Property<int>("orderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("orderId", "productId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("ProductInOrder");
+                });
+
             modelBuilder.Entity("EC_Domain.Entity.ProductInShoppingCart", b =>
                 {
                     b.Property<int>("shoppingCartId")
@@ -120,6 +165,20 @@ namespace EC_Repository.Migrations
                     b.HasIndex("AppUserId1");
 
                     b.ToTable("shoppingCarts");
+                });
+
+            modelBuilder.Entity("EC_Domain.Entity.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status");
                 });
 
             modelBuilder.Entity("EC_Domain.Entity.TypeOfProduct", b =>
@@ -334,6 +393,21 @@ namespace EC_Repository.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<int>("ordersId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("productsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ordersId", "productsId");
+
+                    b.HasIndex("productsId");
+
+                    b.ToTable("OrderProduct");
+                });
+
             modelBuilder.Entity("ProductShoppingCart", b =>
                 {
                     b.Property<int>("productsId")
@@ -347,6 +421,23 @@ namespace EC_Repository.Migrations
                     b.HasIndex("shoppingCartsId");
 
                     b.ToTable("ProductShoppingCart");
+                });
+
+            modelBuilder.Entity("EC_Domain.Entity.Order", b =>
+                {
+                    b.HasOne("EC_Domain.Identity.AppUser", "AppUser")
+                        .WithMany("orders")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("EC_Domain.Entity.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("statusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("EC_Domain.Entity.Product", b =>
@@ -374,6 +465,25 @@ namespace EC_Repository.Migrations
                     b.Navigation("Gender");
 
                     b.Navigation("TypeOfProduct");
+                });
+
+            modelBuilder.Entity("EC_Domain.Entity.ProductInOrder", b =>
+                {
+                    b.HasOne("EC_Domain.Entity.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EC_Domain.Entity.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("EC_Domain.Entity.ProductInShoppingCart", b =>
@@ -455,6 +565,21 @@ namespace EC_Repository.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("EC_Domain.Entity.Order", null)
+                        .WithMany()
+                        .HasForeignKey("ordersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EC_Domain.Entity.Product", null)
+                        .WithMany()
+                        .HasForeignKey("productsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ProductShoppingCart", b =>
                 {
                     b.HasOne("EC_Domain.Entity.Product", null)
@@ -468,6 +593,11 @@ namespace EC_Repository.Migrations
                         .HasForeignKey("shoppingCartsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EC_Domain.Identity.AppUser", b =>
+                {
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }

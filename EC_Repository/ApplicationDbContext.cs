@@ -1,5 +1,6 @@
 ﻿using EC_Domain.Entity;
 using EC_Domain.Identity;
+using EC_Domain.Mappings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,8 +25,8 @@ namespace EC_Repository
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<ProductInShoppingCart>()
-                .HasKey(k => new { k.shoppingCartId,k.productId});
+            new ProductInOrderMap(builder.Entity<ProductInOrder>());
+            new ProductInShoppingCartMap(builder.Entity<ProductInShoppingCart>());
         }
     }
 }

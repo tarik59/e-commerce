@@ -21,5 +21,6 @@ namespace EC_Domain.Entity
         public int typeOfProductId { get; set; }
         public TypeOfProduct TypeOfProduct { get; set; }
         public ICollection<ShoppingCart> shoppingCarts { get; set; }
+        public ICollection<Order> orders { get; set; }
     }
 }
