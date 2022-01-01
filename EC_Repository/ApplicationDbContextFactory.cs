@@ -14,7 +14,7 @@ namespace EC_Repository
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer(DbFactory.GetConnectionString);
+            optionsBuilder.UseSqlite(DbFactory.GetConnectionString);
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }

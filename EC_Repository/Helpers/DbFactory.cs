@@ -13,7 +13,7 @@ namespace EC_Repository.Helpers
 
         public static string GetConnectionString
         {
-            get { return "Server=.\\SQLExpress;Database=ec_db;Trusted_Connection=True;MultipleActiveResultSets=true"; }
+            get { return "DataSource=./ec_db"; }
         }
     }
 }
