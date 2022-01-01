@@ -19,4 +19,8 @@
     <ProjectReference Include="..\EC_Domain\EC_Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>
