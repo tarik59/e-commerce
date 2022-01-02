@@ -8,7 +8,7 @@ namespace EC_Repository.Interfaces
 {
     public interface IRepository<T>
     {
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
         Task<T> Get(long id);
         Task Insert(T entity);
         Task Update(T entity);

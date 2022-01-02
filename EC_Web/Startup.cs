@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EC_Domain.Identity;
+using MediatR;
 
 namespace EC_Web
 {
@@ -38,6 +39,7 @@ namespace EC_Web
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllers();
+            services.AddMediatR(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EC_Web", Version = "v1" });

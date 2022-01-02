@@ -20,9 +20,9 @@ namespace EC_Repository.Implementations
             this.context = context;
             entities = context.Set<T>();
         }
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return entities.AsEnumerable();
+            return await entities.ToListAsync();
         }
 
         public async Task<T> Get(long id)

@@ -17,6 +17,7 @@ namespace EC_Repository
         {
         }
         public DbSet<Gender> Genders { get; set;}
+        public DbSet<Order> orders { get; set;}
         public DbSet<Product> Products { get; set;}
         public DbSet<ShoppingCart> shoppingCarts { get; set;}
         public DbSet<TypeOfProduct> typeOfProducts { get; set;}
