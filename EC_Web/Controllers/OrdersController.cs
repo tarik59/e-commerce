@@ -9,6 +9,8 @@ using EC_Domain.Entity;
 using EC_Repository;
 using MediatR;
 using EC_Web.MediatrMiddleware.Query;
+using EC_Web.MediatrMiddleware.Command;
+using EC_Web.Extensions;
 
 namespace EC_Web.Controllers
 {
@@ -37,8 +39,9 @@ namespace EC_Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            //NOT IMPLEMENTED!
-            return  Ok();
+            var query=new GetSingleOrderQuery(id);
+            var result=await _mediator.Send(query);
+            return (result!=null)?Ok(result):new NotFoundResult();
         }
 
         // PUT: api/Orders/5
@@ -75,12 +78,11 @@ namespace EC_Web.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> CreateOrder()
         {
-            _context.orders.Add(order);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            var query = new CreateOrderCommand(User.GetUserId());
+            var result = await _mediator.Send(query);
+            return NoContent();
         }
 
         // DELETE: api/Orders/5

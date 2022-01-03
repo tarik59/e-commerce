@@ -25,8 +25,4 @@
     <ProjectReference Include="..\EC_Services\EC_Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MediatrMiddleware\Command\" />
-  </ItemGroup>
-
 </Project>

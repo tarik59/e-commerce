@@ -40,5 +40,9 @@ namespace EC_Services.Implementations
         {
             await _ordersRepository.Update(order);
         }
+        public async Task CreateOrder(string userId)
+        {
+            new NotImplementedException();
+        }
     }
 }

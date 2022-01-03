@@ -3,14 +3,16 @@ using System;
 using EC_Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EC_Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220102223543_FixProductOrderManyToManyRelatiom")]
+    partial class FixProductOrderManyToManyRelatiom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +52,9 @@ namespace EC_Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
@@ -64,9 +69,9 @@ namespace EC_Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("statusId");
+                    b.HasIndex("AppUserId");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("statusId");
 
                     b.ToTable("orders");
                 });
@@ -407,15 +412,15 @@ namespace EC_Repository.Migrations
 
             modelBuilder.Entity("EC_Domain.Entity.Order", b =>
                 {
+                    b.HasOne("EC_Domain.Identity.AppUser", "AppUser")
+                        .WithMany("orders")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("EC_Domain.Entity.Status", "Status")
                         .WithMany()
                         .HasForeignKey("statusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("EC_Domain.Identity.AppUser", "AppUser")
-                        .WithMany("orders")
-                        .HasForeignKey("userId");
 
                     b.Navigation("AppUser");
 

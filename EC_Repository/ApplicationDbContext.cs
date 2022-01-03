@@ -28,6 +28,9 @@ namespace EC_Repository
             base.OnModelCreating(builder);
             new ProductInOrderMap(builder.Entity<ProductInOrder>());
             new ProductInShoppingCartMap(builder.Entity<ProductInShoppingCart>());
+            new ProductInOrderRelationalMap(builder.Entity<Order>());
+            new ProductInShoppingCartRelationalMap(builder.Entity<Product>());
+           
         }
     }
 }

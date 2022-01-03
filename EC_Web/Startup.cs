@@ -16,6 +16,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using EC_Domain.Identity;
 using MediatR;
+using EC_Services.Interfaces;
+using EC_Services.Implementations;
+using EC_Repository.Interfaces;
+using EC_Repository.Implementations;
 
 namespace EC_Web
 {
@@ -39,6 +43,8 @@ namespace EC_Web
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllers();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+           services.AddScoped<IOrderService, OrderService>();
             services.AddMediatR(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
