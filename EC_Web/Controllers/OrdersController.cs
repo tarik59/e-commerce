@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Application.Mediatr.Command;
+using Application.Mediatr.Query;
+using EC_Domain.Entity;
+using EC_Repository;
+using EC_Web.Extensions;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EC_Domain.Entity;
-using EC_Repository;
-using MediatR;
-using EC_Web.MediatrMiddleware.Query;
-using EC_Web.MediatrMiddleware.Command;
-using EC_Web.Extensions;
 
 namespace EC_Web.Controllers
 {
@@ -39,9 +37,9 @@ namespace EC_Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var query=new GetSingleOrderQuery(id);
-            var result=await _mediator.Send(query);
-            return (result!=null)?Ok(result):new NotFoundResult();
+            var query = new GetSingleOrderQuery(id);
+            var result = await _mediator.Send(query);
+            return (result != null) ? Ok(result) : new NotFoundResult();
         }
 
         // PUT: api/Orders/5

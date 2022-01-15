@@ -1,10 +1,8 @@
-﻿using EC_Domain.Entity;
-using EC_Repository.Interfaces;
-using EC_Services.Interfaces;
+﻿using Application.Repositories;
+using Application.Services;
+using EC_Domain.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EC_Services.Implementations
@@ -28,7 +26,7 @@ namespace EC_Services.Implementations
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
-          return await _ordersRepository.Get(id);
+            return await _ordersRepository.Get(id);
         }
 
         public async Task<IEnumerable<Order>> GetOrdersAsync()

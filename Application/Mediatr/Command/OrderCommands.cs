@@ -1,7 +1,6 @@
-﻿using EC_Domain.Entity;
-using MediatR;
+﻿using MediatR;
 
-namespace EC_Web.MediatrMiddleware.Command
+namespace Application.Mediatr.Command
 {
     public class CreateOrderCommand : IRequest<Unit>
     {

@@ -1,10 +1,8 @@
-﻿using EC_Domain.Entity;
-using EC_Repository.Interfaces;
+﻿using Application.Repositories;
+using EC_Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EC_Repository.Implementations

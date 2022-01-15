@@ -2,7 +2,7 @@
 using MediatR;
 using System.Collections.Generic;
 
-namespace EC_Web.MediatrMiddleware.Query
+namespace Application.Mediatr.Query
 {
     public class GetAllOrdersQuery : IRequest<List<Order>>
     {

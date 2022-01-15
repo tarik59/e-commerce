@@ -1,25 +1,14 @@
+using Application;
+using EC_Domain.Identity;
 using EC_Repository;
-using EC_Domain;
+using EC_Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EC_Domain.Identity;
-using MediatR;
-using EC_Services.Interfaces;
-using EC_Services.Implementations;
-using EC_Repository.Interfaces;
-using EC_Repository.Implementations;
 
 namespace EC_Web
 {
@@ -27,7 +16,7 @@ namespace EC_Web
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration; 
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -43,13 +32,13 @@ namespace EC_Web
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllers();
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-           services.AddScoped<IOrderService, OrderService>();
-            services.AddMediatR(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EC_Web", Version = "v1" });
             });
+            services.AddApplicationContainer(Configuration);
+            services.AddRepositoryContainer(Configuration);
+            services.AddServiceContainer(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

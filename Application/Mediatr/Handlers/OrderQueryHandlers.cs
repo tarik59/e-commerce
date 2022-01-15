@@ -1,13 +1,12 @@
-﻿using EC_Domain.Entity;
-using EC_Services.Interfaces;
-using EC_Web.MediatrMiddleware.Command;
-using EC_Web.MediatrMiddleware.Query;
+﻿using Application.Mediatr.Query;
+using Application.Services;
+using EC_Domain.Entity;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EC_Web.MediatrMiddleware.Handlers
+namespace Application.Mediatr.Handlers
 {
     public class GetAllOrdersHandler : IRequestHandler<GetAllOrdersQuery, IEnumerable<Order>>
     {
@@ -37,21 +36,4 @@ namespace EC_Web.MediatrMiddleware.Handlers
             return order;
         }
     }
-
-    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand,Unit>
-    {
-        private readonly IOrderService _orderService;
-        public CreateOrderHandler(IOrderService orderService)
-        {
-            _orderService = orderService;
-        }
-        public async Task<Unit> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
-        {
-             await _orderService.CreateOrder(request.userId);
-            return Unit.Value;
-        }
-    }
-
-
-
 }

@@ -20,8 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EC_Domain\EC_Domain.csproj" />
-    <ProjectReference Include="..\EC_Repository\EC_Repository.csproj" />
     <ProjectReference Include="..\EC_Services\EC_Services.csproj" />
   </ItemGroup>
 
