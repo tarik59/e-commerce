@@ -19,8 +19,9 @@ namespace EC_Services.Implementations
             await _ordersRepository.Insert(order);
         }
 
-        public async Task DeleteOrderAsync(Order order)
+        public async Task DeleteOrderAsync(int id)
         {
+            Order order=await _ordersRepository.Get(id);
             await _ordersRepository.Delete(order);
         }
 

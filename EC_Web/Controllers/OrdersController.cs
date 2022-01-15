@@ -12,15 +12,11 @@ using System.Threading.Tasks;
 
 namespace EC_Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController : BaseApiController
     {
-        private readonly ApplicationDbContext _context;
         private readonly IMediator _mediator;
-        public OrdersController(ApplicationDbContext context, IMediator mediator)
+        public OrdersController(IMediator mediator)
         {
-            _context = context;
             _mediator = mediator;
         }
 
@@ -43,38 +39,15 @@ namespace EC_Web.Controllers
         }
 
         // PUT: api/Orders/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        [HttpPut]
+        public async Task<IActionResult> PutOrder(Order order)
         {
-            if (id != order.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(order).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            var query = new UpdateOrderCommand(order);
+            var result = await _mediator.Send(query);
             return NoContent();
         }
 
         // POST: api/Orders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Order>> CreateOrder()
         {
@@ -87,21 +60,10 @@ namespace EC_Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _context.orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.orders.Remove(order);
-            await _context.SaveChangesAsync();
+            var query = new DeleteOrderCommand(id);
+            var result = await _mediator.Send(query);
 
             return NoContent();
-        }
-
-        private bool OrderExists(int id)
-        {
-            return _context.orders.Any(e => e.Id == id);
         }
     }
 }

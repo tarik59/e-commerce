@@ -11,6 +11,7 @@ namespace Application
             (this IServiceCollection services, IConfiguration config)
         {
             services.AddMediatR(typeof(CreateOrderHandler).Assembly);
+            services.AddMediatR(typeof(UpdateOrderHandler).Assembly);
             return services;
         }
     }
