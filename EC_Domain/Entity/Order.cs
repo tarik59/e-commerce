@@ -16,7 +16,7 @@ namespace EC_Domain.Entity
         public int statusId { get; set; } = 1;
         public Status Status { get; set; }
         [ForeignKey("AppUser")]
-        public string userId { get; set; }
+        public int userId { get; set; }
         public AppUser AppUser { get; set; }
         public ICollection<Product> products { get; set; }
     }

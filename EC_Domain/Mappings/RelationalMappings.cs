@@ -1,4 +1,5 @@
 ﻿using EC_Domain.Entity;
+using EC_Domain.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EC_Domain.Mappings
@@ -27,6 +28,19 @@ namespace EC_Domain.Mappings
                    .WithMany().HasForeignKey(x => x.shoppingCartId),
                    x => x.HasOne(x => x.Product)
                   .WithMany().HasForeignKey(x => x.productId));
+        }
+    }
+    public class AppUserRoleRelationalMap
+    {
+        public AppUserRoleRelationalMap(EntityTypeBuilder<AppUser> entityTypeBuilder)
+        {
+            entityTypeBuilder.HasMany(x => x.Roles)
+               .WithMany(x => x.Users)
+               .UsingEntity<AppUserRole>(
+                   x => x.HasOne(x => x.Role)
+                   .WithMany().HasForeignKey(x => x.RoleId),
+                   x => x.HasOne(x => x.User)
+                  .WithMany().HasForeignKey(x => x.UserId));
         }
     }
 }

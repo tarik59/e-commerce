@@ -20,4 +20,11 @@ namespace EC_Domain.Mappings
                 .HasKey(k => new { k.shoppingCartId, k.productId });
         }
     }
+    public class AppUserRolesMap
+    {
+        public AppUserRolesMap(EntityTypeBuilder<AppUserRole> entityTypeBuilder)
+        {
+            entityTypeBuilder.HasKey(k => new { k.UserId, k.RoleId });
+        }
+    }
 }
