@@ -10,7 +10,7 @@ namespace Application.Services
         public Task<Order> GetOrderByIdAsync(int id);
         public Task AddOrderAsync(Order order);
         public Task UpdateOrderAsync(Order order);
-        public Task DeleteOrderAsync(Order order);
+        public Task DeleteOrderAsync(int id);
         public Task CreateOrder(string userId);
         //Task<bool> SaveAllAsync();
 
