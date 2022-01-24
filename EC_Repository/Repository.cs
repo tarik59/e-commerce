@@ -27,6 +27,10 @@ namespace EC_Repository.Implementations
         {
             return await entities.SingleOrDefaultAsync(s => s.Id == id);
         }
+        public async Task<T> Find(params object[] keyValues)
+        {
+            return await entities.FindAsync(keyValues);
+        }
         public async Task Insert(T entity)
         {
             if (entity == null)

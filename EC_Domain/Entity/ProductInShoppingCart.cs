@@ -6,5 +6,6 @@
         public Product Product { get; set; }
         public int shoppingCartId { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
+        public int Quantity { get; set; } = 1;
     }
 }

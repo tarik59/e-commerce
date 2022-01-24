@@ -8,8 +8,4 @@
     <ProjectReference Include="..\EC_Domain\EC_Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
-
 </Project>
