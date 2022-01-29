@@ -9,10 +9,10 @@ namespace Application.Services
 {
     public interface IShoppingCartService
     {
-        public Task<IEnumerable<Product>> GetAllProducts(int shoppingCartId);
-        public Task AddProduct(int shoppingCartId, int productId);
-        public Task DeleteProduct(int shoppingCartId, int productId);
-        public Task IncreaseQuantity(int shoppingCartId, int productId);
+        public Task<IEnumerable<Product>> GetAllProducts(int userId);
+        public Task AddProduct(int userId, int productId);
+        public Task DeleteProduct(int userId, int productId);
+        public Task IncreaseQuantity(int userId, int productId);
 
     }
 }

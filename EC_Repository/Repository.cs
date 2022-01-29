@@ -3,6 +3,7 @@ using EC_Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EC_Repository.Implementations
@@ -71,6 +72,12 @@ namespace EC_Repository.Implementations
         public async Task SaveChanges()
         {
             await context.SaveChangesAsync();
+        }
+
+        public async Task<T> Get(Expression<Func<T, bool>> expression)
+        {
+            var result = await entities.FirstOrDefaultAsync(expression);
+            return result;
         }
     }
 

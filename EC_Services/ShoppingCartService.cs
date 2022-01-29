@@ -20,60 +20,60 @@ namespace EC_Services
             _productRepo = productRepo;
         }
 
-        public async Task AddProduct(int shoppingCartId, int productId)
+        public async Task AddProduct(int userId, int productId)
         {
-            ShoppingCart shoppingCart = await GetShoppingCart(shoppingCartId);
+            ShoppingCart shoppingCart = await GetShoppingCart(userId);
 
             if (shoppingCart.products.SingleOrDefault(p => p.Id == productId) != null)
             {
                 throw new Exception("Product already in cart");
             }
-
             var product = await _productRepo.Find(productId);
-
             shoppingCart.products.Add(product);
+
             await _shoppingCartRepo.SaveChanges();
         }
 
-        public async Task IncreaseQuantity(int shoppingCartId, int productId)
+        public async Task IncreaseQuantity(int userId, int productId)
         {
-            ShoppingCart shoppingCart = await GetShoppingCart(shoppingCartId);
+            ShoppingCart shoppingCart = await GetShoppingCart(userId);
 
             if (shoppingCart.products.SingleOrDefault(p => p.Id == productId) == null)
             {
                 throw new Exception("Error - product does not exists in cart");
             }
-            var productInCart = await _productInShoppingCartRepo.Find(shoppingCartId, productId);
+            var productInCart = await _productInShoppingCartRepo.Find(shoppingCart.Id, productId);
             productInCart.Quantity++;
+
             await _shoppingCartRepo.SaveChanges();
         }
 
-        public async Task DeleteProduct(int shoppingCartId, int productId)
+        public async Task DeleteProduct(int userId, int productId)
         {
-            ShoppingCart shoppingCart = await GetShoppingCart(shoppingCartId);
+            ShoppingCart shoppingCart = await GetShoppingCart(userId);
 
             if (shoppingCart.products.SingleOrDefault(p => p.Id == productId) == null)
             {
                 throw new Exception("Error - product does not exists in cart");
             }
             var product = await _productRepo.Find(productId);
-
             shoppingCart.products.Remove(product);
+
             await _shoppingCartRepo.SaveChanges();
         }
-        public async Task<IEnumerable<Product>> GetAllProducts(int shoppingCartId)
+        public async Task<IEnumerable<Product>> GetAllProducts(int userId)
         {
-            var shoppingCart = await GetShoppingCart(shoppingCartId);
+            var shoppingCart = await GetShoppingCart(userId);
             return shoppingCart.products;
         }
-        private async Task<ShoppingCart> GetShoppingCart(int shoppingCartId)
+        private async Task<ShoppingCart> GetShoppingCart(int userId)
         {
-            var shoppingCart = await _shoppingCartRepo.Get(shoppingCartId);
+            var shoppingCart = await _shoppingCartRepo.Get(c => c.AppUserId == userId);
+
             if (shoppingCart == null)
             {
                 throw new Exception("Shopping cart with that id does not exist");
             }
-
             return shoppingCart;
         }
 
