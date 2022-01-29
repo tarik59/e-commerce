@@ -40,7 +40,7 @@ namespace EC_Web.Controllers
 
         // PUT: api/Orders/5
         [HttpPut]
-        public async Task<IActionResult> PutOrder(Order order)
+        public async Task<ActionResult> PutOrder(Order order)
         {
             var query = new UpdateOrderCommand(order);
             var result = await _mediator.Send(query);
@@ -51,7 +51,7 @@ namespace EC_Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> CreateOrder()
         {
-            var query = new CreateOrderCommand(User.GetUserId());
+            var query = new CreateOrderCommand(1);
             var result = await _mediator.Send(query);
             return NoContent();
         }

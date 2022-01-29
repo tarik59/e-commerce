@@ -19,10 +19,10 @@ namespace EC_Web.Controllers
             _db = db;
         }
 
-        public ActionResult<UserDto> TestMapster(int id)
-        {
-            return  _db.Users.Find(id).Adapt<UserDto>();
-        }
+        //public ActionResult<UserDto> TestMapster(int id)
+        //{
+        //    return  _db.Users.Find(id).Adapt<UserDto>();
+        //}
 
     }
 }

@@ -1,12 +1,13 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 
 namespace EC_Web.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static string GetUserId(this ClaimsPrincipal user)
+        public static int GetUserId(this ClaimsPrincipal user)
         {
-            return user.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Convert.ToInt32(user.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     }
 }
