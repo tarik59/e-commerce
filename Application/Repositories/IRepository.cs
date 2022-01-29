@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Application.Repositories
@@ -12,6 +14,7 @@ namespace Application.Repositories
         Task Update(T entity);
         Task Delete(T entity);
         void Remove(T entity);
+        Task<T> Get(Expression<Func<T, bool>> expression);
         Task SaveChanges();
     }
 }
