@@ -1,5 +1,6 @@
 ﻿using Application.Contracts;
 using Application.Mediatr.Command;
+using Application.Mediatr.Query;
 using Application.Services;
 using EC_Domain.Identity;
 using EC_Repository;
@@ -38,23 +39,9 @@ namespace EC_Web.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userManager.Users
-                .SingleOrDefaultAsync(user => user.UserName == loginDto.UserName.ToLower());
-
-            if (user == null)
-            {
-                return Unauthorized("Invalid username");
-            }
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-            if (!result.Succeeded) return Unauthorized();
-
-            return new UserDto
-            {
-                UserName = user.UserName,
-                Token = await _tokenService.CreateToken(user)
-            };
+            var query = new LoginUserQuery(loginDto);
+            var user = await _mediator.Send(query);
+            return user;
         }
     }
 }

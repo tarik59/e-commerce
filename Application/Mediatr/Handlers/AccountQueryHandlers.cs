@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Mediatr.Handlers
 {
-    public class LoginQueryHandler : IRequestHandler<LoginQuery, UserDto>
+    public class LoginQueryHandler : IRequestHandler<LoginUserQuery, UserDto>
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -24,8 +24,9 @@ namespace Application.Mediatr.Handlers
         {
             _userManager = userManager;
             _tokenService = tokenService;
+            _signInManager = signInManager;
         }
-        public async Task<UserDto> Handle(LoginQuery request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _userManager.Users
                 .SingleOrDefaultAsync(user => user.UserName == request.loginDto.UserName.ToLower());

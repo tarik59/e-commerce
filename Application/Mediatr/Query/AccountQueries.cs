@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.Mediatr.Query
 {
-    public class LoginQuery : IRequest<UserDto>
+    public class LoginUserQuery : IRequest<UserDto>
     {
         public LoginDto loginDto;
 
-        public LoginQuery(LoginDto loginDto)
+        public LoginUserQuery(LoginDto loginDto)
         {
             this.loginDto = loginDto;
         }
