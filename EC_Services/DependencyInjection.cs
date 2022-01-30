@@ -14,6 +14,7 @@ namespace EC_Services
         (this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
             return services;
         }

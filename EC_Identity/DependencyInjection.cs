@@ -1,9 +1,11 @@
-﻿using EC_Domain.Identity;
+﻿using Application.Services;
+using EC_Domain.Identity;
 using EC_Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -40,6 +42,8 @@ namespace EC_Identity
                         ValidateAudience = false
                     };
                 });
+
+            services.AddScoped<ITokenService, TokenService>();
             return services;
         }
     }
