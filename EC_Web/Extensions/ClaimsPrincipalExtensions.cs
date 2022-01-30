@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace EC_Web.Extensions
 {
@@ -7,7 +6,7 @@ namespace EC_Web.Extensions
     {
         public static int GetUserId(this ClaimsPrincipal user)
         {
-            return Convert.ToInt32(user.FindFirstValue(ClaimTypes.NameIdentifier));
+            return int.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     }
 }
