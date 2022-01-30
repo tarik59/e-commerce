@@ -74,9 +74,13 @@ namespace EC_Repository.Implementations
             await context.SaveChangesAsync();
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> expression)
+        public async Task<T> Get(Expression<Func<T, bool>> expression, string includes="")
         {
-            var result = await entities.FirstOrDefaultAsync(expression);
+            var result =
+                (!string.IsNullOrEmpty(includes))
+                ? await entities.Include(includes).FirstOrDefaultAsync(expression)
+                : await entities.FirstOrDefaultAsync(expression); 
+
             return result;
         }
     }

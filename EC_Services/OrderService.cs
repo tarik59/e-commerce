@@ -10,9 +10,11 @@ namespace EC_Services.Implementations
     public class OrderService : IOrderService
     {
         public IRepository<Order> _ordersRepository { get; set; }
-        public OrderService(IRepository<Order> repository)
+        public IRepository<ShoppingCart> _shoppingCartRepo { get; set; }
+        public OrderService(IRepository<Order> repository, IRepository<ShoppingCart> shoppingCartRepo)
         {
             _ordersRepository = repository;
+            _shoppingCartRepo = shoppingCartRepo;
         }
         public async Task AddOrderAsync(Order order)
         {
@@ -39,9 +41,15 @@ namespace EC_Services.Implementations
         {
             await _ordersRepository.Update(order);
         }
-        public async Task CreateOrder(string userId)
+        public async Task CreateOrder(int userId)
         {
-            new NotImplementedException();
+           var shoppingcart=await _shoppingCartRepo.Get(x=>x.AppUserId == userId);
+            var order = new Order()
+            {
+                products = shoppingcart.products,
+                userId = userId
+            };
+           await _ordersRepository.Insert(order);
         }
     }
 }

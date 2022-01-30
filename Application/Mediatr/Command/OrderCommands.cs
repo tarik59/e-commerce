@@ -5,8 +5,8 @@ namespace Application.Mediatr.Command
 {
     public class CreateOrderCommand : IRequest<Unit>
     {
-        public string userId;
-        public CreateOrderCommand(string Id)
+        public int userId;
+        public CreateOrderCommand(int Id)
         {
             userId = Id;
         }
