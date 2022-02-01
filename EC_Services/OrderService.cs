@@ -43,7 +43,7 @@ namespace EC_Services.Implementations
         }
         public async Task CreateOrder(int userId)
         {
-           var shoppingcart=await _shoppingCartRepo.Get(x=>x.AppUserId == userId);
+           var shoppingcart=await _shoppingCartRepo.Get(x=>x.AppUserId == userId,"products");
             var order = new Order()
             {
                 products = shoppingcart.products,
