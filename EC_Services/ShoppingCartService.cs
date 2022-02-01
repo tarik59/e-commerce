@@ -1,6 +1,8 @@
-﻿using Application.Repositories;
+﻿using Application.Contracts;
+using Application.Repositories;
 using Application.Services;
 using EC_Domain.Entity;
+using Mapster;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +36,7 @@ namespace EC_Services
             await _shoppingCartRepo.SaveChanges();
         }
 
-        public async Task IncreaseQuantity(int userId, int productId)
+        public async Task ChangeQuantity(int userId, int productId, bool increasing)
         {
             ShoppingCart shoppingCart = await GetShoppingCart(userId);
 
@@ -43,8 +45,9 @@ namespace EC_Services
                 throw new Exception("Error - product does not exists in cart");
             }
             var productInCart = await _productInShoppingCartRepo.Find(shoppingCart.Id, productId);
-            productInCart.Quantity++;
 
+            IncreaseOrDecrease(productInCart, increasing);
+            
             await _shoppingCartRepo.SaveChanges();
         }
 
@@ -61,14 +64,15 @@ namespace EC_Services
 
             await _shoppingCartRepo.SaveChanges();
         }
-        public async Task<IEnumerable<Product>> GetAllProducts(int userId)
+        public async Task<IEnumerable<ProductDto>> GetAllProducts(int userId)
         {
             var shoppingCart = await GetShoppingCart(userId);
-            return shoppingCart.products;
+            return shoppingCart.products.Adapt<IEnumerable<ProductDto>>();
         }
+
         private async Task<ShoppingCart> GetShoppingCart(int userId)
         {
-            var shoppingCart = await _shoppingCartRepo.Get(c => c.AppUserId == userId);
+            var shoppingCart = await _shoppingCartRepo.Get(c => c.AppUserId == userId, "products");
 
             if (shoppingCart == null)
             {
@@ -77,5 +81,18 @@ namespace EC_Services
             return shoppingCart;
         }
 
+        private void IncreaseOrDecrease(ProductInShoppingCart productInCart, bool increasing)
+        {
+            if (increasing)
+            {
+                productInCart.Quantity++;
+                return;
+            }
+            productInCart.Quantity--;
+            if (productInCart.Quantity <= 0)
+            {
+                _productInShoppingCartRepo.Remove(productInCart);
+            }
+        }
     }
 }

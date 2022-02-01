@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EC_Repository.Implementations
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext context;
         private DbSet<T> entities;
@@ -26,7 +26,7 @@ namespace EC_Repository.Implementations
 
         public async Task<T> Get(long id)
         {
-            return await entities.SingleOrDefaultAsync(s => s.Id == id);
+            return await entities.FindAsync(id);
         }
         public async Task<T> Find(params object[] keyValues)
         {

@@ -26,7 +26,6 @@ namespace EC_Identity
 
         public async Task<string> CreateToken(AppUser user)
         {
-
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
