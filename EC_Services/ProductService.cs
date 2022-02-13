@@ -11,7 +11,7 @@ namespace EC_Services
 {
     public class ProductService : IProductService
     {
-        public IRepository<Product> _productsRepository { get; set; }
+        public IRepository<Product> _productsRepository;
         public ProductService(IRepository<Product> productsRepository)
         {
             _productsRepository = productsRepository;

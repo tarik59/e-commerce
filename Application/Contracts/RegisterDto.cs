@@ -14,7 +14,7 @@ namespace Application.Contracts
         [Required]
         public string City { get; set; }
         [Required]
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
         [Required]
         public string Address { get; set; }
     }
