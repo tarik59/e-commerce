@@ -1,4 +1,5 @@
-﻿using EC_Domain.Entity;
+﻿using Application.Contracts;
+using EC_Domain.Entity;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Application.Mediatr.Query
 {
-    public class GetAllProductsQuery : IRequest<IEnumerable<Product>>
+    public class GetAllProductsQuery : IRequest<IEnumerable<ProductDto>>
     {
 
     }
 
 
-    public class GetSingleProductQuery : IRequest<Product>
+    public class GetSingleProductQuery : IRequest<ProductDto>
     {
         public int ProductId;
         public GetSingleProductQuery(int id)

@@ -13,12 +13,14 @@ namespace Application
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Brand, BrandDto>(MemberList.Destination);
+            CreateMap<Brand, BrandDto>();
             CreateMap<BrandDto, Brand>();
-            CreateMap<Gender, GenderDto>(MemberList.Destination);
+            CreateMap<Gender, GenderDto>();
             CreateMap<GenderDto, Gender>();
-            CreateMap<TypeOfProduct, TypeOfProductDto>(MemberList.Destination);
+            CreateMap<TypeOfProduct, TypeOfProductDto>();
             CreateMap<TypeOfProductDto, TypeOfProduct>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
         }
     }
 }
