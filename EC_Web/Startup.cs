@@ -1,4 +1,5 @@
 using Application;
+using DatingApp.API.MIddleware;
 using EC_Identity;
 using EC_Repository;
 using EC_Services;
@@ -23,6 +24,7 @@ namespace EC_Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EC_Web", Version = "v1" });
@@ -39,7 +41,8 @@ namespace EC_Web
             //DbFactory.SetProperties(Configuration);
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseMiddleware<ExceptionMiddleware>();
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EC_Web v1"));
             }
@@ -47,7 +50,7 @@ namespace EC_Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
             app.UseAuthentication();
 
             app.UseAuthorization();

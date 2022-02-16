@@ -19,12 +19,13 @@ namespace EC_Repository.Implementations
             this.context = context;
             entities = context.Set<T>();
         }
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll(string [] arr=null)
         {
-            return await entities.ToListAsync();
+            return (arr.Length>0)? await entities.Include(arr[0]).Include(arr[1]).Include(arr[2]).ToListAsync()
+                :await entities.ToListAsync();
         }
 
-        public async Task<T> Get(long id)
+        public async Task<T> Get(int id)
         {
             return await entities.FindAsync(id);
         }

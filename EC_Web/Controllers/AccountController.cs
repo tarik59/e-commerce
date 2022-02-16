@@ -10,22 +10,27 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace EC_Web.Controllers
 {
+    public class TestObj
+    {
+        public List<TestDto> list { get; set; }
+    }
+   public class TestDto
+    {
+        public string Id { get; set; } 
+        public string Name { get; set; }
+    }
+
     public class AccountController : BaseApiController
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly ITokenService _tokenService;
         private readonly IMediator _mediator;
-        public AccountController(IMediator mediator, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
+        public AccountController(IMediator mediator)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _tokenService = tokenService;
             _mediator = mediator;
         }
         [HttpPost("register")] 

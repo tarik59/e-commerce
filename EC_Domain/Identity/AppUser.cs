@@ -9,7 +9,7 @@ namespace EC_Domain.Identity
     public class AppUser : IdentityUser<int>
     {
         public string City { get; set; }
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
         public string Address { get; set; }
         [DataType(DataType.Date)]
         public ICollection<Order> orders { get; set; }
