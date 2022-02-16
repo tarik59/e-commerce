@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Mediatr.Query
 {
-    public class GetAllProductsQuery : IRequest<List<Product>>
+    public class GetAllProductsQuery : IRequest<IEnumerable<Product>>
     {
 
     }

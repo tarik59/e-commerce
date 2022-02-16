@@ -35,7 +35,7 @@ namespace EC_Services
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            return await _productsRepository.GetAll();
+            return await _productsRepository.GetAll(new string[] { "Brand", "TypeOfProduct", "Gender" });
         }
 
         public async Task UpdateProductAsync(Product product)

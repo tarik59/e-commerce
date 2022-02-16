@@ -8,8 +8,8 @@ namespace Application.Repositories
 {
     public interface IRepository<T>
     {
-        Task<IEnumerable<T>> GetAll();
-        Task<T> Get(long id);
+        Task<IEnumerable<T>> GetAll(string[] includes =null);
+        Task<T> Get(int id);
         Task<T> Find(params object[] keyValues);
         Task Insert(T entity);
         Task Update(T entity);
