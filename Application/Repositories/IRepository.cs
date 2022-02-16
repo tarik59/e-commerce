@@ -15,7 +15,7 @@ namespace Application.Repositories
         Task Update(T entity);
         Task Delete(T entity);
         void Remove(T entity);
-        Task<T> Get(Expression<Func<T, bool>> expression, string includes="");
+        Task<T> Get(Expression<Func<T, bool>> expression, params string[] includes);
         Task SaveChanges();
     }
 }

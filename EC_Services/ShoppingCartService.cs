@@ -1,8 +1,10 @@
 ﻿using Application.Contracts;
+using Application.Database;
 using Application.Repositories;
 using Application.Services;
 using EC_Domain.Entity;
-using Mapster;
+using EC_Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,12 +69,14 @@ namespace EC_Services
         public async Task<IEnumerable<Product>> GetAllProducts(int userId)
         {
             var shoppingCart = await GetShoppingCart(userId);
+
             return shoppingCart.products;
         }
 
         private async Task<ShoppingCart> GetShoppingCart(int userId)
         {
-            var shoppingCart = await _shoppingCartRepo.Get(c => c.AppUserId == userId, "products");
+            var shoppingCart = await _shoppingCartRepo.Get(c => c.AppUserId == userId, 
+                "products", "products.TypeOfProduct", "products.Gender", "products.Brand");
 
             if (shoppingCart == null)
             {

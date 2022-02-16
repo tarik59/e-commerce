@@ -3,6 +3,7 @@ using EC_Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -75,14 +76,15 @@ namespace EC_Repository.Implementations
             await context.SaveChangesAsync();
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> expression, string includes="")
+        public async Task<T> Get(Expression<Func<T, bool>> expression, params string[] includes)
         {
-            var result =
-                (!string.IsNullOrEmpty(includes))
-                ? await entities.Include(includes).FirstOrDefaultAsync(expression)
-                : await entities.FirstOrDefaultAsync(expression); 
-
-            return result;
+            IQueryable<T> query = entities;
+            foreach(string include in includes)
+            {
+                query = entities.Include(include);
+            }
+            
+            return await query.FirstOrDefaultAsync(expression);
         }
     }
 
