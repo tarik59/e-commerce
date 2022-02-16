@@ -12,7 +12,6 @@ namespace EC_Domain.Entity
         [Required]
         public double Price { get; set; }
         public int Quantity { get; set; }
-        public string Category { get; set; }
         public string Model { get; set; }
         public int brandId { get; set; }
         public Brand Brand { get; set; }

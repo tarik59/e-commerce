@@ -11,6 +11,8 @@ namespace Application
             (this IServiceCollection services, IConfiguration config)
         {
             services.AddMediatR(typeof(CreateOrderHandler).Assembly);
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
             return services;
         }
     }

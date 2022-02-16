@@ -9,17 +9,15 @@ namespace Application.Contracts
 {
     public class ProductDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
         public double Price { get; set; }
         public int Quantity { get; set; }
         public string Category { get; set; }
         public string Model { get; set; }
-        public int brandId { get; set; }
-        public Brand Brand { get; set; }
-        public Gender Gender { get; set; }
-        public int typeOfProductId { get; set; }
-        public TypeOfProduct TypeOfProduct { get; set; }
+        public BrandDto Brand { get; set; }
+        public GenderDto Gender { get; set; }
+        public TypeOfProductDto TypeOfProduct { get; set; }
     }
 }

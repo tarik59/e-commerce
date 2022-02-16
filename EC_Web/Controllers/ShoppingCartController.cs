@@ -42,7 +42,7 @@ namespace EC_Web.Controllers
             await _mediator.Send(changeProductQuantityCommand);
             return NoContent();
         }
-        [HttpGet]
+        [HttpGet("Products")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
             var getAllProductsFromShoppingCartQuery = new GetAllProductsFromShoppingCartQuery(User.GetUserId());

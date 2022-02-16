@@ -64,10 +64,10 @@ namespace EC_Services
 
             await _shoppingCartRepo.SaveChanges();
         }
-        public async Task<IEnumerable<ProductDto>> GetAllProducts(int userId)
+        public async Task<IEnumerable<Product>> GetAllProducts(int userId)
         {
             var shoppingCart = await GetShoppingCart(userId);
-            return shoppingCart.products.Adapt<IEnumerable<ProductDto>>();
+            return shoppingCart.products;
         }
 
         private async Task<ShoppingCart> GetShoppingCart(int userId)

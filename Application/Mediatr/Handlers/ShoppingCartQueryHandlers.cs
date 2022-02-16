@@ -2,6 +2,7 @@
 using Application.Mediatr.Query;
 using Application.Services;
 using EC_Domain.Entity;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,8 @@ namespace Application.Mediatr.Handlers
 
         public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsFromShoppingCartQuery request, CancellationToken cancellationToken)
         {
-            return await _shoppingCartService.GetAllProducts(request.userId);
+            var products =  await _shoppingCartService.GetAllProducts(request.userId);
+            return products.Adapt<IEnumerable<ProductDto>>();
         }
     }
 }
