@@ -1,4 +1,4 @@
-﻿using Application.Mediatr.Handlers;
+﻿using Application.Mediatr.Command;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
