@@ -6,6 +6,7 @@ using EC_Domain.Entity;
 using EC_Domain.Identity;
 using EC_Web.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace EC_Web.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : BaseApiController
     {
         private readonly IMediator _mediator;
@@ -23,7 +25,8 @@ namespace EC_Web.Controllers
         }
         [HttpPost("addProduct/{productId}")]
         public async Task<IActionResult> AddProduct(int productId)
-        {
+         {
+            var user = User.GetUserId();
             var addProductInCartCommand = new AddProductInShoppingCartCommand(User.GetUserId(), productId);
             await _mediator.Send(addProductInCartCommand);
             return NoContent();
@@ -35,7 +38,7 @@ namespace EC_Web.Controllers
             await _mediator.Send(deleteProductInCartCommand);
             return NoContent();
         }
-        [HttpPut("changeProductQuantity/{productId}")]
+        [HttpPut("changeProductQuantity/{productId}/{increasing}")]
         public async Task<IActionResult> ChangeProductQuantity(int productId, bool increasing)
         {
             var changeProductQuantityCommand = new ChangeProductQuantityInShoppingCartCommand(User.GetUserId(), productId, increasing);
