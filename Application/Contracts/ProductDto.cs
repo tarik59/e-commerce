@@ -17,5 +17,6 @@ namespace Application.Contracts
         public GenderDto Gender { get; set; }
         public BrandDto Brand { get; set; }
         public TypeOfProductDto TypeOfProduct { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

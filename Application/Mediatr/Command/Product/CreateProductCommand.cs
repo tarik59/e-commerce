@@ -47,7 +47,7 @@ namespace Application.Mediatr.Command.Products
             product.Price = request.Product.Price;
             product.Description = request.Product.Description;
             product.Model = request.Product.Model;
-
+            product.ImageUrl = request.Product.ImageUrl;
             var brand = await _brandRepo.Get(c => c.Name == request.Product.Brand.Name);
             if (brand == null)
             {
