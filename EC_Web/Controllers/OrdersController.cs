@@ -7,6 +7,7 @@ using EC_Domain.Entity;
 using EC_Repository;
 using EC_Web.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace EC_Web.Controllers
 {
+    [Authorize]
     public class OrdersController : BaseApiController
     {
         private readonly IMediator _mediator;

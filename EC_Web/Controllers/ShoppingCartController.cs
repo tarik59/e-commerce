@@ -9,6 +9,7 @@ using EC_Domain.Identity;
 using EC_Web.Extensions;
 using EC_Web.Objects.ShoppingCart;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace EC_Web.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : BaseApiController
     {
         private readonly IMediator _mediator;
