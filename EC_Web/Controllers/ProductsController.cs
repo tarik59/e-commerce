@@ -1,5 +1,9 @@
-﻿using Application.Mediatr.Command;
+﻿using Application.Contracts;
+using Application.Mediatr.Command;
+using Application.Mediatr.Command.Product;
+using Application.Mediatr.Command.Products;
 using Application.Mediatr.Query;
+using Application.Mediatr.Query.Products;
 using EC_Domain.Entity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +23,7 @@ namespace EC_Web.Controllers
         }
         // GET: api/<ProductController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> Get()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> Get()
         {
             var query = new GetAllProductsQuery();
             var result = await _mediator.Send(query);
@@ -28,7 +32,7 @@ namespace EC_Web.Controllers
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> Get(int id)
+        public async Task<ActionResult<ProductDto>> Get(int id)
         {
             var query = new GetSingleProductQuery(id);
             var result = await _mediator.Send(query);
@@ -37,18 +41,18 @@ namespace EC_Web.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Product product)
+        public async Task<ActionResult> Post([FromBody] ProductDto product)
         {
-            var query = new CreateProductCommand(product);
-            var result = await _mediator.Send(query);
+            var command = new CreateProductCommand(product);
+            await _mediator.Send(command);
             return NoContent();
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromBody] Product product)
+        [HttpPut("{productId}")]
+        public async Task<ActionResult> Put(int productId, [FromBody] ProductDto product)
         {
-            var query = new UpdateProductCommand(product);
+            var query = new UpdateProductCommand(productId, product);
             var result = await _mediator.Send(query);
             return NoContent();
         }

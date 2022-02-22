@@ -50,6 +50,12 @@ namespace EC_Services.Implementations
                 userId = userId
             };
            await _ordersRepository.Insert(order);
+           foreach(var product in shoppingcart.products)
+            {
+                product.Quantity--;
+            }
+           shoppingcart.products.Clear();
+            await _ordersRepository.SaveChanges();
         }
     }
 }

@@ -12,17 +12,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Mediatr.Command
+namespace Application.Mediatr.Command.Account
 {
-    public class RegisterUserCommand : IRequest<UserDto>
+    public class RegisterUserCommand : IRequest<UserLoginResponseModel>
     {
-        public RegisterDto registerDto;
-        public RegisterUserCommand(RegisterDto registerDto)
+        public RegisterUserRequest registerDto;
+        public RegisterUserCommand(RegisterUserRequest registerDto)
         {
             this.registerDto = registerDto;
         }
     }
-    public class RegisterCommandHandler : IRequestHandler<RegisterUserCommand, UserDto>
+    public class RegisterCommandHandler : IRequestHandler<RegisterUserCommand, UserLoginResponseModel>
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
@@ -33,7 +33,7 @@ namespace Application.Mediatr.Command
             _tokenService = tokenService;
         }
 
-        public async Task<UserDto> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<UserLoginResponseModel> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             if (await _userManager.Users.AnyAsync(u => u.UserName == request.registerDto.UserName.ToLower()))
             {
@@ -53,7 +53,7 @@ namespace Application.Mediatr.Command
                 throw new Exception(registerResult.Errors.ToString());
             }
 
-            return new UserDto
+            return new UserLoginResponseModel
             {
                 UserName = user.UserName,
                 Token = await _tokenService.CreateToken(user)

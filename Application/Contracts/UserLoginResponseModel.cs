@@ -2,7 +2,7 @@
 
 namespace Application.Contracts
 {
-    public class UserDto
+    public class UserLoginResponseModel
     {
         public string UserName { get; set; }
         public string Token { get; set; }

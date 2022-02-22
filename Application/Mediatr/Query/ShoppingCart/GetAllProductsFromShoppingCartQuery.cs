@@ -1,7 +1,6 @@
 ﻿using Application.Contracts;
 using Application.Services;
 using AutoMapper;
-using EC_Domain.Entity;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Mediatr.Query
+namespace Application.Mediatr.Query.ShoppingCart
 {
     public class GetAllProductsFromShoppingCartQuery : IRequest<IEnumerable<ProductDto>>
     {

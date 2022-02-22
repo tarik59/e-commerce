@@ -2,7 +2,7 @@
 
 namespace Application.Contracts
 {
-    public class RegisterDto
+    public class RegisterUserRequest
     {
 
         [StringLength(30, MinimumLength = 3)]

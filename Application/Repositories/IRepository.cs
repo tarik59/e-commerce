@@ -1,6 +1,7 @@
 ﻿using EC_Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace Application.Repositories
 {
     public interface IRepository<T>
     {
-        Task<IEnumerable<T>> GetAll(string[] includes =null);
+        Task<IQueryable<T>> GetAll(string[] includes =null);
         Task<T> Get(int id);
         Task<T> Find(params object[] keyValues);
         Task Insert(T entity);

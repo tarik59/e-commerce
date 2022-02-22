@@ -1,6 +1,8 @@
 ﻿using Application.Contracts;
 using Application.Mediatr.Command;
+using Application.Mediatr.Command.Account;
 using Application.Mediatr.Query;
+using Application.Mediatr.Query.Account;
 using Application.Services;
 using EC_Domain.Identity;
 using EC_Repository;
@@ -34,7 +36,7 @@ namespace EC_Web.Controllers
             _mediator = mediator;
         }
         [HttpPost("register")] 
-        public async Task<ActionResult<UserDto>> Register([FromBody] RegisterDto registerDto)
+        public async Task<ActionResult<UserLoginResponseModel>> Register([FromBody] RegisterUserRequest registerDto)
         {
             var command = new RegisterUserCommand(registerDto);
             var user = await _mediator.Send(command);
@@ -42,7 +44,7 @@ namespace EC_Web.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserLoginResponseModel>> Login(LoginUserRequest loginDto)
         {
             var query = new LoginUserQuery(loginDto);
             var user = await _mediator.Send(query);

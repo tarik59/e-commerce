@@ -33,6 +33,11 @@ namespace EC_Services
                 throw new Exception("Product already in cart");
             }
             var product = await _productRepo.Find(productId);
+
+            if(product == null)
+            {
+                throw new Exception("Product with that id does not exists");
+            }
             shoppingCart.products.Add(product);
 
             await _shoppingCartRepo.SaveChanges();
@@ -76,7 +81,7 @@ namespace EC_Services
         private async Task<ShoppingCart> GetShoppingCart(int userId)
         {
             var shoppingCart = await _shoppingCartRepo.Get(c => c.AppUserId == userId, 
-                "products", "products.TypeOfProduct", "products.Gender", "products.Brand");
+                "products", "products.Gender", "products.Brand", "products.TypeOfProduct");
 
             if (shoppingCart == null)
             {

@@ -1,6 +1,7 @@
 ﻿using Application.Contracts;
 using AutoMapper;
 using EC_Domain.Entity;
+using EC_Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,8 @@ namespace Application
             CreateMap<TypeOfProduct, TypeOfProductDto>();
             CreateMap<TypeOfProductDto, TypeOfProduct>();
             CreateMap<Product, ProductDto>();
-            CreateMap<ProductDto, Product>();
+            CreateMap<AppUser, AppUserForOrderDto>();
+            CreateMap<Order, OrderDto>();
         }
     }
 }

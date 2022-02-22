@@ -20,10 +20,15 @@ namespace EC_Repository.Implementations
             this.context = context;
             entities = context.Set<T>();
         }
-        public async Task<IEnumerable<T>> GetAll(string [] arr=null)
+        public async Task<IQueryable<T>> GetAll(params string [] includes)
         {
-            return (arr.Length>0)? await entities.Include(arr[0]).Include(arr[1]).Include(arr[2]).ToListAsync()
-                :await entities.ToListAsync();
+            IQueryable<T> query = entities;
+            foreach (string include in includes)
+            {
+                query = entities.Include(include);
+            }
+
+            return query;
         }
 
         public async Task<T> Get(int id)
@@ -81,7 +86,7 @@ namespace EC_Repository.Implementations
             IQueryable<T> query = entities;
             foreach(string include in includes)
             {
-                query = entities.Include(include);
+                query = query.Include(include);
             }
             
             return await query.FirstOrDefaultAsync(expression);

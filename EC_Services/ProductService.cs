@@ -30,7 +30,7 @@ namespace EC_Services
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-           return await _productsRepository.Get(id);
+           return await _productsRepository.Get(c => c.Id == id, "Brand", "TypeOfProduct", "Gender");
         }
 
         public async Task<IEnumerable<Product>> GetProductsAsync()

@@ -1,10 +1,13 @@
 ﻿using Application.Contracts;
 using Application.Mediatr.Command;
+using Application.Mediatr.Command.ShoppingCart;
 using Application.Mediatr.Query;
+using Application.Mediatr.Query.ShoppingCart;
 using Application.Services;
 using EC_Domain.Entity;
 using EC_Domain.Identity;
 using EC_Web.Extensions;
+using EC_Web.Objects.ShoppingCart;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,24 +24,24 @@ namespace EC_Web.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost("addProduct/{productId}")]
-        public async Task<IActionResult> AddProduct(int productId)
+        [HttpPost("addProduct")]
+        public async Task<IActionResult> AddProduct([FromBody] AddProductRequestModel model)
         {
-            var addProductInCartCommand = new AddProductInShoppingCartCommand(User.GetUserId(), productId);
+            var addProductInCartCommand = new AddProductInShoppingCartCommand(User.GetUserId(), model.ProductId);
             await _mediator.Send(addProductInCartCommand);
             return NoContent();
         }
-        [HttpPost("deleteProduct/{productId}")]
-        public async Task<IActionResult> DeleteProduct(int productId)
+        [HttpPost("deleteProduct")]
+        public async Task<IActionResult> DeleteProduct([FromBody] DeleteProductRequestModel model)
         {
-            var deleteProductInCartCommand = new DeleteProductInShoppingCartCommand(User.GetUserId(), productId);
+            var deleteProductInCartCommand = new DeleteProductInShoppingCartCommand(User.GetUserId(), model.ProductId);
             await _mediator.Send(deleteProductInCartCommand);
             return NoContent();
         }
-        [HttpPut("changeProductQuantity/{productId}")]
-        public async Task<IActionResult> ChangeProductQuantity(int productId, bool increasing)
+        [HttpPost("changeProductQuantity")]
+        public async Task<IActionResult> ChangeProductQuantity([FromBody] ChangeProductQuantityRequestModel model)
         {
-            var changeProductQuantityCommand = new ChangeProductQuantityInShoppingCartCommand(User.GetUserId(), productId, increasing);
+            var changeProductQuantityCommand = new ChangeProductQuantityInShoppingCartCommand(User.GetUserId(), model.ProductId, model.Increasing);
             await _mediator.Send(changeProductQuantityCommand);
             return NoContent();
         }

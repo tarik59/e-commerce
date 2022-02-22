@@ -1,5 +1,8 @@
-﻿using Application.Mediatr.Command;
+﻿using Application.Contracts;
+using Application.Mediatr.Command;
+using Application.Mediatr.Command.Order;
 using Application.Mediatr.Query;
+using Application.Mediatr.Query.Orders;
 using EC_Domain.Entity;
 using EC_Repository;
 using EC_Web.Extensions;
@@ -22,37 +25,38 @@ namespace EC_Web.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> Getorders()
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
         {
-            var query = new GetAllOrdersQuery();
+            var query = new GetAllOrdersForLoggedInUserQuery(User.GetUserId());
             var result = await _mediator.Send(query);
             return Ok(result);
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
-            var query = new GetSingleOrderQuery(id);
+            var query = new GetSingleOrderQuery(User.GetUserId(), id);
             var result = await _mediator.Send(query);
             return (result != null) ? Ok(result) : new NotFoundResult();
         }
 
         // PUT: api/Orders/5
-        [HttpPut]
-        public async Task<ActionResult> PutOrder(Order order)
+       /* Ne treba nam momentalno, da vidim da li poslen da ga dodam!
+        * [HttpPut]
+        public async Task<ActionResult> PutOrder(int orderId, OrderDto order)
         {
-            var query = new UpdateOrderCommand(order);
-            var result = await _mediator.Send(query);
+            var query = new UpdateOrderCommand(_userId, orderId, order);
+            await _mediator.Send(query);
             return NoContent();
         }
-
+*/
         // POST: api/Orders
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder()
+        public async Task<ActionResult<OrderDto>> CreateOrder()
         {
-            var query = new CreateOrderCommand(1);
-            var result = await _mediator.Send(query);
+            var query = new CreateOrderCommand(User.GetUserId());
+            await _mediator.Send(query);
             return NoContent();
         }
 
@@ -61,7 +65,7 @@ namespace EC_Web.Controllers
         public async Task<IActionResult> DeleteOrder(int id)
         {
             var query = new DeleteOrderCommand(id);
-            var result = await _mediator.Send(query);
+            await _mediator.Send(query);
 
             return NoContent();
         }

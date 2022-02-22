@@ -1,5 +1,5 @@
 ﻿using Application.Contracts;
-using Application.Services;
+using Application.Repositories;
 using AutoMapper;
 using EC_Domain.Entity;
 using MediatR;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Mediatr.Query
+namespace Application.Mediatr.Query.Products
 {
     public class GetAllProductsQuery : IRequest<IEnumerable<ProductDto>>
     {
@@ -19,26 +19,19 @@ namespace Application.Mediatr.Query
 
     public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, IEnumerable<ProductDto>>
     {
-        private readonly IProductService _productService;
+        private readonly IRepository<Product> _productsRepository;
         private readonly IMapper _mapper;
-        public GetAllProductsHandler(IProductService productService, IMapper mapper)
+        public GetAllProductsHandler(IRepository<Product> productsRepository, IMapper mapper)
         {
-            _productService = productService;
+            _productsRepository = productsRepository;
             _mapper = mapper;
         }
         public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var orders = await _productService.GetProductsAsync();
-            return _mapper.Map<IEnumerable<ProductDto>>(orders);
+            var products = await _productsRepository.GetAll(new string[] { "Brand", "TypeOfProduct", "Gender" });
+            products.Where(c => c.Quantity > 0);
+            return _mapper.Map<IEnumerable<ProductDto>>(products.ToList());
         }
     }
 
-    public class GetSingleProductQuery : IRequest<ProductDto>
-    {
-        public int ProductId;
-        public GetSingleProductQuery(int id)
-        {
-            ProductId = id;
-        }
-    }
 }
