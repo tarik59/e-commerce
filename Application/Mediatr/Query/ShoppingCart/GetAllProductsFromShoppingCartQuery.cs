@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Mediatr.Query.ShoppingCart
 {
-    public class GetAllProductsFromShoppingCartQuery : IRequest<IEnumerable<ProductDto>>
+    public class GetAllProductsFromShoppingCartQuery : IRequest<UserShoppingCartDto>
     {
         public int userId;
         public GetAllProductsFromShoppingCartQuery(int userId)
@@ -19,7 +19,7 @@ namespace Application.Mediatr.Query.ShoppingCart
             this.userId = userId;
         }
     }
-    public class GetAllProductsFromShoppingCartQueryHandler : IRequestHandler<GetAllProductsFromShoppingCartQuery, IEnumerable<ProductDto>>
+    public class GetAllProductsFromShoppingCartQueryHandler : IRequestHandler<GetAllProductsFromShoppingCartQuery, UserShoppingCartDto>
     {
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IMapper _mapper;
@@ -30,10 +30,10 @@ namespace Application.Mediatr.Query.ShoppingCart
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsFromShoppingCartQuery request, CancellationToken cancellationToken)
+        public async Task<UserShoppingCartDto> Handle(GetAllProductsFromShoppingCartQuery request, CancellationToken cancellationToken)
         {
-            var products = await _shoppingCartService.GetAllProducts(request.userId);
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
+            var products = await _shoppingCartService.GetShoppingCartForUser(request.userId);
+            return products;
         }
     }
 

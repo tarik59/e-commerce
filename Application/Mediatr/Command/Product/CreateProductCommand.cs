@@ -69,6 +69,7 @@ namespace Application.Mediatr.Command.Products
             }
             product.typeOfProductId = typeOfProduct.Id;
             await _productService.AddProductAsync(product);
+            
             return Unit.Value;
         }
     }
