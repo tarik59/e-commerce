@@ -41,6 +41,10 @@ namespace EC_Services
             {
                 throw new Exception("Product with that id does not exists");
             }
+            if(product.Quantity <=0)
+            {
+                throw new Exception("Product not available");
+            }
             shoppingCart.products.Add(product);
 
             await _shoppingCartRepo.SaveChanges();

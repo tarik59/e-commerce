@@ -91,6 +91,16 @@ namespace EC_Repository.Implementations
             
             return await query.FirstOrDefaultAsync(expression);
         }
+        public async Task<IQueryable<T>> GetAll(Expression<Func<T, bool>> expression, params string[] includes)
+        {
+            IQueryable<T> query = entities;
+            foreach (string include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return query;
+        }
     }
 
 }
