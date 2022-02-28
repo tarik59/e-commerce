@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace EC_Web.Controllers
 {
-    [Authorize]
+    
     public class ProductsController : BaseApiController
     {
         private readonly IMediator _mediator;
