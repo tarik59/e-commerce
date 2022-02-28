@@ -32,8 +32,8 @@ namespace Application.Mediatr.Query.Orders
         }
         public async Task<IEnumerable<OrderDto>> Handle(GetAllOrdersForLoggedInUserQuery request, CancellationToken cancellationToken)
         {
-            var orders = await _orderRepo.Get(o => o.userId == request.UserId);
-             return _mapper.Map<IEnumerable<OrderDto>>(orders);
+            var orders = await _orderRepo.GetAll(o => o.userId == request.UserId);
+            return _mapper.Map<IEnumerable<OrderDto>>(orders);
         }
     }
 

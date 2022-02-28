@@ -20,9 +20,10 @@ namespace Application
             CreateMap<GenderDto, Gender>();
             CreateMap<TypeOfProduct, TypeOfProductDto>();
             CreateMap<TypeOfProductDto, TypeOfProduct>();
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>().ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id));
             CreateMap<AppUser, AppUserForOrderDto>();
             CreateMap<Order, OrderDto>();
+            CreateMap<Product, ProductDtoShoppingCart>(MemberList.None);
         }
     }
 }
